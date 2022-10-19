@@ -1,0 +1,41 @@
+<div class="daily-history-container">
+  <p-table [columns]="cols" [value]="data" styleClass="p-datatable-sm p-datatable-gridlines"
+  sortField="trackDate" [sortOrder]="-1" [scrollable]="true" scrollHeight="490px">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="{{col.class}}">
+          {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData" class="each-record">
+        <td class="portfolio">{{rowData.portfolio}}</td>
+        <td class="date track-date">{{rowData.trackDate | date: 'MM/dd/yyyy'}}</td>
+        <td class="no-of-fund-houses number">{{rowData.noOfFundHouses}}</td>
+        <td class="no-of-folios number">{{rowData.noOfFolios}}</td>
+        <td class="no-of-funds number">{{rowData.noOfFunds}}</td>
+        <td class="investment number">{{rowData.investment | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="profit number percent">{{rowData.profit | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="absolute-return number percent">{{rowData.absoluteReturun | number: '2.2-2'}} %</td>
+        <td class="tax number percent">{{rowData.tax | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="tax-percent number percent">{{rowData.taxPercent | number: '1.0-2'}} %</td>
+        <td class="profit-after-tax number percent">{{rowData.profitAfterTax | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="profit-after-tax-percent number percent">{{rowData.pftaftTaxPer | number: '1.0-2'}} %</td>
+        <td class="xirr number percent" [class.red]="rowData['xirr'] <= 12" [class.yellow]="rowData['xirr'] > 12 && rowData['xirr'] <= 15"
+        [class.orange]="rowData['xirr'] > 15 && rowData['xirr'] <= 20" [class.green]="rowData['xirr'] > 20">{{rowData.xirr | number: '2.2-2'}} %</td>
+        <!-- <td *ngFor="let col of columns" [class.red]="col.field == 'xirr' && rowData['xirr'] <= 12"
+              [class.yellow]="col.field == 'xirr' && rowData['xirr'] > 12 && rowData['xirr'] <= 15"
+              [class.orange]="col.field == 'xirr' && rowData['xirr'] > 15 && rowData['xirr'] <= 20"
+              [class.green]="col.field == 'xirr' && rowData['xirr'] > 20"
+              [class.number]= "col.type == 'number' "[class.decimal]= "col.type == 'decimal'" [class.date]= "col.type == 'date'" [class.string]= "col.type == 'string'">
+          <div *ngIf="col.field == 'portfolio'">{{rowData[col.field]}}</div>
+          <div *ngIf="col.field == 'trackDate'">{{rowData[col.field] | date: 'MM/dd/yyyy'}}</div>
+          <div *ngIf="col.type == 'number'">{{rowData[col.field] | number: '2.0-0'}}</div>
+          <div *ngIf="col.type == 'decimal'">{{ rowData[col.field] | number: '2.2-2' }}</div>
+        </td> -->
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,14 @@
+.quarterly-review-container {
+  .grid-container {
+    .p-datatable {
+      .p-datatable-thead, .p-datatable-tbody {
+        // justify-content: center;
+        .portfolio, .goal, .current-expense, .target-expense, .start-date, .end-date, .period-date,
+        .investment, .current-value, .profit, .absolute-return, .xirr, .sip-amount, .completed-months, .estimated-investment,
+        .sip-achieved, .goal-current-achieved, .goal-target-achieved {
+          width: 6.5rem;
+        }
+      }
+    }
+  }
+}

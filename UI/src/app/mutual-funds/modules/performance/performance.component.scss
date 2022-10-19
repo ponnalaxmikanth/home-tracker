@@ -1,0 +1,24 @@
+.category-performance-view {
+  margin: 0 1rem;
+  .p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
+    .category {
+      min-width: 30rem;
+    }
+  }
+  .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    // padding: 0.5rem 0.5rem;
+    // display: flex;
+    // white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // .category-cell {
+    //   min-width: 30rem;
+    // }
+    .category {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      min-width: 30rem;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.stocks-container {
+  margin: .75rem;
+  .actions {
+    .date-filter {
+      width: 13rem;
+      .p-calendar {
+        width: 100% !important;
+      }
+    }
+    .download-indices-data {
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<div class="current-month-invests-container" *ngIf="currentInvestments && currentInvestments.length > 0">
+  <!-- <p-table #dt [columns]="cols" [value]="transactions" styleClass="p-datatable-sm p-datatable-gridlines" sortField="transactionDate"
+  [sortOrder]="-1"
+  [scrollable]="true" scrollHeight="440px"> -->
+
+  <p-table #dt [columns]="cols" [value]="currentInvestments" styleClass="p-datatable-sm p-datatable-gridlines"
+  sortField="transactionDate" [sortOrder]="-1" [scrollable]="true" scrollHeight="490px" sortField="remainingAmount"
+  [sortOrder]="-1">
+
+    <ng-template pTemplate="caption">
+      <div fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="1rem">
+        <p-inputSwitch [(ngModel)]="showActive" onLabel="Group" offLabel="No Group" (onChange)="handleActiveChange($event);"></p-inputSwitch>
+          <!-- <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button> -->
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="{{col.class}}" hidden="{{!col.display}}">
+            {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+            <p-columnFilter *ngIf="col.filter" type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+          </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData" class="each-record">
+        <td class="portfolio">{{rowData.portfolio}}</td>
+        <td class="goal">{{rowData.goal}}</td>
+        <td class="folio-number">{{rowData.folioNumber}}</td>
+        <!-- <td class="number schema-code">{{rowData.schemaCode}}</td> -->
+        <td class="schema-name">{{rowData.schemaName}} ({{rowData.schemaCode}})</td>
+        <td class="isin">{{rowData.isin}}</td>
+
+        <td class="number target-amount">{{rowData.targetAmount | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="number investment">{{rowData.investment | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="number investment-percent">{{rowData.investmentPer | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}%</td>
+        <td class="number percent remaining-amount">{{rowData.remainingAmount | number: '2.2-2'}}</td>
+        <td class="number percent remaining-percent">{{rowData.remainingPer | number: '2.2-2'}}%</td>
+        <td class="is-active">{{rowData.isActive}}</td>
+    </tr>
+    </ng-template>
+  </p-table>
+
+</div>

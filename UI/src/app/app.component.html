@@ -1,0 +1,21 @@
+<div class="toolbar menu-container" role="banner">
+  <div class="nav-container">
+    <ht-navbar></ht-navbar>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+<div class="settings-container">
+  <a tabindex="0" class="layout-config-button"><i class="pi pi-cog"></i></a>
+</div>
+
+<p-toast position="bottom-center" [baseZIndex]="5000"></p-toast>
+
+<div class="app-footer"></div>
+<!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "timer" [fullScreen] = "true">
+  <p style="color: white" > Loading... </p>
+</ngx-spinner> -->
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-scale-multiple" [fullScreen] = "true">
+  <p style="color: white" > Loading... </p>
+</ngx-spinner>

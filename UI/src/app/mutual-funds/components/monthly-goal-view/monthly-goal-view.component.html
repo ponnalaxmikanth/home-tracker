@@ -1,0 +1,35 @@
+<div class="monthly-goal-view-container" *ngIf="goalViewData && goalViewData.length > 0">
+  <p-table [columns]="cols" [value]="monthlyGoalViewData" styleClass="p-datatable-sm p-datatable-gridlines" sortField="date"
+      [sortOrder]="-1" [scrollable]="true" scrollHeight="75vh">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
+            <div> {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon> </div>
+          </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td class="date track-date">{{rowData.date | date: 'MM/dd/yyyy'}}</td>
+        <td class="portfolio">{{rowData.portfolio}}</td>
+        <td class="goal-name">{{rowData.goalName}}</td>
+        <td class="sip number" number>{{rowData.sip | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="investment number">{{rowData.investment | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="investment number">{{rowData.investment * 100 / rowData.sip | number: '2.2-2' }} %</td>
+        <td class="profit number">{{rowData.profit | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="absolute-return number percent">{{rowData.profitPer | number: '2.2-2'}} %</td>
+        <td class="xirr number percent" [class.red]="rowData['xirr'] <= 12" [class.yellow]="rowData['xirr'] > 12 && rowData['xirr'] <= 15"
+          [class.orange]="rowData['xirr'] > 15 && rowData['xirr'] <= 20" [class.green]="rowData['xirr'] > 20">{{rowData.xirr | number: '2.2-2'}} %</td>
+        <!-- <td *ngFor="let col of columns" [class.red]="col.field == 'xirr' && rowData['xirr'] <= 12"
+        [class.yellow]="col.field == 'xirr' && rowData['xirr'] > 12 && rowData['xirr'] <= 15"
+        [class.orange]="col.field == 'xirr' && rowData['xirr'] > 15 && rowData['xirr'] <= 20"
+        [class.green]="col.field == 'xirr' && rowData['xirr'] > 20"
+          [ngClass]="{'number': col.type === 'number', 'string': col.type === 'string', 'date': col.type === 'date' }">
+          <div *ngIf="col.type == 'date'">{{rowData[col.field]  | date: 'MM/yyyy'}}</div>
+          <div *ngIf="col.type == 'string'">{{rowData[col.field]}}</div>
+          <div *ngIf="col.type == 'number'">{{rowData[col.field] | number: col.format}}</div>
+        </td> -->
+    </tr>
+    </ng-template>
+  </p-table>
+</div>

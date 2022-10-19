@@ -1,0 +1,31 @@
+.monthly-goal-view-container {
+  p-table {
+    table {
+      thead {
+        th {
+          text-align: center;
+          background-color: black;
+          color: white;
+        }
+      }
+    }
+  }
+
+  // .p-datatable.p-datatable-sm .p-datatable-thead > tr > th
+
+  // .p-datatable {
+  //   .p-datatable-thead > tr > th {
+  //     justify-content: center;
+  //   }
+  //   .p-datatable-tbody {
+  //     .p-element {
+  //       td.date {
+  //         justify-content: center;
+  //       }
+  //       td.number {
+  //         justify-content: right;
+  //       }
+  //     }
+  //   }
+  // }
+}

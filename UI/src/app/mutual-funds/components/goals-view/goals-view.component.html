@@ -1,0 +1,167 @@
+<div class="goals-view-container" fxFlex fxLayout="column">
+  <div class="">
+    <p-fieldset legend="Overall" [toggleable]="true">
+      <div class="goals-consolidated-container" fxLayout="row" fxLayoutAlign="stretch space-evenly" fxLayoutGap="1rem">
+
+        <div class="consolidated monthly-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="25">
+          <div class="">Monthly Investment</div>
+          <div class="">
+            <span class="">
+              {{ goalConsolidated?.currentMonthInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
+            </span>
+            <span class="">
+              {{goalConsolidated?.sipAmount | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+            </span>
+            <span class="current-profit-percent">&nbsp;&nbsp;({{goalConsolidated?.currentMonthSIPPercent | number: '1.2-2'}}%)</span>
+          </div>
+        </div>
+
+        <div class="consolidated investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="25">
+          <div class="">Current Investment</div>
+          <div class="">
+            <span class="">
+              {{ investment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
+            </span>
+            <span class="">
+              {{ targetInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+            </span>
+            <span class="current-profit-percent">&nbsp;&nbsp;({{ investment * 100 / targetInvestment | number: '1.2-2'}}%)</span>
+          </div>
+        </div>
+
+        <div class="consolidated total-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="25">
+          <div class="">Target Investment</div>
+          <div class="">
+            <span class="">
+              {{ goalConsolidated?.currentInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
+            </span>
+            <span class="">
+              {{goalConsolidated?.expectedInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+            </span>
+            <span class="current-profit-percent">&nbsp;&nbsp;({{goalConsolidated?.targetInvested | number: '1.2-2'}}%)</span>
+          </div>
+
+        </div>
+
+        <div class="consolidated target-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="25">
+          <div>Target with Inflation</div>
+          <div>
+            <span class="">
+              {{ goalConsolidated?.currentValue | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
+            </span>
+            <span class="">
+              {{goalConsolidated?.futureValue | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+            </span>
+            <span class="current-profit-percent">&nbsp;&nbsp;({{goalConsolidated?.targetAchieved | number: '1.2-2'}}%)</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="">
+        <ht-overall-timeline-view [consolidated]="goalConsolidated"></ht-overall-timeline-view>
+      </div>
+    </p-fieldset>
+  </div>
+
+  <div class="">
+    <span class="horizontal-line"></span>
+  </div>
+
+
+  <div class="goals-view-list-container" fxLayout="row wrap 1rem" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+    <ng-template ngFor let-goal [ngForOf]="goals" let-i="index">
+      <div fxFlex="0 1 calc(33%-0.5rem)" class="each-goal {{goal?.goalName == 'Un Mapped' ? 'unmapped': goal?.goalName}}">
+
+        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="name"><b>{{goal?.portfolio}} - {{goal?.goalName}}</b></div>
+          <div class="">
+            <span class="period">
+              Period: {{ goal?.startDate | date: 'MM/dd/yyyy' }} - {{ goal?.sipEndDate | date: 'MM/dd/yyyy' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="chart-labels" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="investment">Investment: {{goal?.goalInvestmentPer | number: '1.2-2'}}%
+              - Profit: {{goal?.goalProfitPer | number: '1.2-2'}}%</div>
+            <div class="">Investment</div>
+            <div class="remaining">Remaining: {{goal?.goalRemainingPer | number: '1.2-2'}}%</div>
+          </div>
+          <div class="chart">
+            <span class="completed investment" style="width: {{goal?.goalInvestmentPer | number: '1.2-2'}}%;"></span>
+            <span class="completed profit" style="width: {{goal?.goalProfitPer | number: '1.2-2'}}%;"></span>
+            <span class="remaining" style="width: {{goal?.goalRemainingPer | number: '1.2-2'}}%;"></span>
+          </div>
+        </div>
+
+        <div class="months timeline">
+          <div class="chart-labels" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="completed">
+              Months:
+              {{ goal?.completedMonths | number: '1.0-0'}}
+              ({{goal?.completedMonths * 100 / (goal?.completedMonths + goal?.remainingMonths)| number: '1.2-2'}}%)
+            </div>
+            <div class="">Time: {{goal?.remainingMonths + goal?.completedMonths | number: '1.0-0'}}</div>
+            <div class="remaining">
+              Remaining:
+              {{ goal?.remainingMonths | number: '1.0-0' }}
+              ({{goal?.remainingMonths * 100  / (goal?.completedMonths + goal?.remainingMonths) | number: '1.2-2'}}%)
+            </div>
+          </div>
+          <div class="chart">
+            <span class="months completed" style="width: {{goal?.completedMonths * 100 / (goal?.completedMonths + goal?.remainingMonths)}}%;"></span>
+            <span class="remaining" style="width: {{goal?.remainingMonths * 100 / (goal?.completedMonths + goal?.remainingMonths)}}%;"></span>
+          </div>
+        </div>
+
+        <div class="sip-details" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="monthly-investment">SIP: {{ goal?.sipAmount | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+          <span class="target">Expected Investment: {{goal?.completedMonths * goal?.sipAmount | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+        </div>
+
+        <div class="" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="monthly-investment">Present Value: {{ goal?.presentValue | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+          <span class="target">Future Value: {{goal?.futureValue | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+        </div>
+
+        <div class="" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="remaining-investment">
+            Remaining Investment: {{ (goal?.remainingInvestment) | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+          </span>
+          <span class="remaining">Remaining Goal: {{(goal?.remainingGoal) | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+        </div>
+
+        <div class="" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="remaining-investment">
+            Current Investment: {{ goal?.investment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+            ({{(goal?.investment) * 100 / (goal?.completedMonths * goal?.sipAmount) | number: '0.0-2' }}%)
+          </span>
+          <span class="remaining">Target Investment: {{ goal?.expectedInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+        </div>
+
+        <div class="" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="remaining">Current Profit: {{(goal?.currentProfit)| currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+          <span class="remaining-investment">
+            Target Profit:
+            {{ goal?.expectedProfit | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+          </span>
+        </div>
+
+        <div class="" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="current">Current Value: {{goal?.currentValue | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+          <span class="current">Achieved: {{goal?.achieved | number: '1.2-2'}}%</span>
+        </div>
+
+        <div class="" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="current">Investment: {{goal?.expectedInvestPer | number: '2.2-2'}}%</span>
+          <span class="current">
+            Profit: {{ goal?.expectedProfitPer | number: '1.2-2'}}% |
+            {{ (goal?.futureValue - goal?.expectedInvestment) / goal?.expectedInvestment * 100 | number: '1.2-2'}}%
+            </span>
+        </div>
+
+      </div>
+    </ng-template>
+  </div>
+</div>

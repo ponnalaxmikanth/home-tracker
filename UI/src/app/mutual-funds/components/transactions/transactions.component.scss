@@ -1,0 +1,24 @@
+.transactions-container {
+  .p-datatable {
+    .p-datatable-thead > tr > th {
+      justify-content: center;
+    }
+    .p-element {
+      .schema-name {
+        min-width: 22rem;
+      }
+      &.schema-name {
+        min-width: 22rem;
+      }
+      .goal, .category {
+        min-width: 12rem;
+      }
+      &.goal, &.category {
+        min-width: 12rem;
+      }
+    }
+    // p-table {
+
+    // }
+  }
+}

@@ -1,0 +1,130 @@
+<div class="funds-purchase-container">
+  <div class="header">
+    <h2>Fund Purchase</h2>
+  </div>
+
+  <div class="json-data-container" fxLayout="column" fxLayoutGap="1rem">
+    <div class="json-data" fxFlex="100%" fxLayout="column">
+      <textarea rows="15" cols="30" pInputTextarea [(ngModel)]="jsonData"></textarea>
+    </div>
+
+    <div class="action-buttons" fxLayout="column" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="1rem" fxFlex="100%">
+      <p-button label="Edit" icon="pi pi-lock" *ngIf="!disabled" styleClass="p-button-secondary" (onClick)="disabled = !disabled"></p-button>
+      <p-button label="Edit" icon="pi pi-lock-open" *ngIf="disabled" styleClass="p-button-secondary" (onClick)="disabled = !disabled"></p-button>
+      <p-button label="Save" icon="pi pi-save" styleClass="p-button" type="submit" [disabled]="!jsonData && !saveApiInProgress" [loading]="saveApiInProgress" (onClick)="saveTransaction();"></p-button>
+      <p-button label="populate fields" icon="pi pi-refresh" styleClass="p-button-outlined" [disabled]="!jsonData" (onClick)="populateFields();"></p-button>
+    </div>
+  </div>
+
+  <!-- (ngSubmit)="addFundTransaction();" -->
+  <form [formGroup]="fundPurchaseForm">
+    <div class="funds-purchase-form" fxLayout="row wrap" fxLayoutGap="1rem" fxFlex="100%">
+
+      <div class="portfolio" fxFlex="45%" fxLayout="column">
+        <span class="label">Portfolio</span>
+        <!--  -->
+        <p-dropdown [disabled]="disabled" [options]="portfolios" formControlName="portfolioID" optionLabel="portfolioName" optionValue="id" (onChange)="portfolioChanged();"></p-dropdown>
+      </div>
+
+      <div class="folio" fxFlex="45%" fxLayout="column">
+        <span class="label">Folio</span>
+
+        <!-- (onChange)="getFundNAV();" -->
+        <p-dropdown [options]="pfolios" [disabled]="disabled" formControlName="folioID" [filter]="true" filterBy="label" [group]="true">
+          <ng-template let-group pTemplate="group">
+            <div class="flex align-items-center">
+                <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px"/> -->
+                <span>{{group.label}}</span>
+            </div>
+          </ng-template>
+          <ng-template let-folio pTemplate="item">
+            <div class="folio-item" fxFlex fxLayout="column" fxLayoutGap="0.5rem" style="padding: 0.25rem;border: 1px solid;">
+              <div class="goal-name">{{folio.goal}}</div>
+                <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" /> -->
+                <div class="folio-number">{{folio.label}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+        <!-- <p-dropdown [options]="filteredFolios" formControlName="folioID" optionLabel="folioNumber" optionValue="id" (onChange)="getFundNAV();"></p-dropdown> -->
+        <!-- <p-cascadeSelect formControlName="folioID" [disabled]="disabled" [options]="pfolios" optionLabel="folio" optionValue="id" optionGroupLabel="name" [optionGroupChildren]="['folios']"
+          placeholder="Select a Folio" (onChange)="getFundNAV();">
+        </p-cascadeSelect> -->
+      </div>
+
+      <div class="pan-card" fxFlex="95.5%" fxLayout="column">
+        <p-dropdown [disabled]="disabled" [options]="panCards" formControlName="panCard" optionLabel="pan" optionValue="pan"></p-dropdown>
+      </div>
+
+      <!-- <div class="input-details row"> -->
+      <div class="schema-code" fxFlex="45%" fxLayout="column">
+        <span class="label">Schema Code</span>
+        <!-- (onBlur)="getFundNAV();" -->
+        <p-inputNumber inputId="integeronly" [disabled]="disabled" mode="decimal" formControlName="schemaCode" [useGrouping]="false"></p-inputNumber>
+      </div>
+
+      <div class="purchase-date" fxFlex="45%" fxLayout="column">
+        <span class="label">Purchase Date</span>
+        <!-- (onSelect)="getFundNAV();" -->
+        <p-calendar inputId="icon" [disabled]="disabled" formControlName="purchaseDate" [showIcon]="true" [maxDate]="maxDateValue"></p-calendar>
+      </div>
+
+      <!-- </div> -->
+
+      <!-- <div class="schema-info row"> -->
+      <div class="fund-house" fxFlex="45%" fxLayout="column">
+        <span class="label">Fund House</span>
+        <span class="">{{fundPurchaseForm.value?.house}}</span>
+      </div>
+
+      <div class="schema-name" fxFlex="45%" fxLayout="column">
+        <span class="label">Schema Name</span>
+        <span class="">{{fundPurchaseForm.value?.schemaName}}</span>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="fund-details row"> -->
+      <div class="detail" fxFlex="45%" fxLayout="column">
+        <span class="label">Fund Option</span>
+        <span class="">{{fundPurchaseForm.value.option}}</span>
+      </div>
+
+      <div class="detail fund-cateogry" fxFlex="45%" fxLayout="column">
+        <span class="label">Fund Cateogry</span>
+        <span class="">{{fundPurchaseForm.value.category}}</span>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="group-section row"> -->
+      <div class="amount each-control" fxFlex="45%" fxLayout="column">
+        <span class="label">Amount</span>
+        <!-- (onBlur)="amountChanged();" -->
+        <p-inputNumber inputId="amount" [disabled]="disabled" mode="currency" currency="INR" locale="en-IN" [minFractionDigits]="4" formControlName="amount"></p-inputNumber>
+      </div>
+
+      <div class="schema-nav each-control" fxFlex="45%" fxLayout="column">
+        <div class="label">NAV</div>
+        <p-inputNumber inputId="nav" [disabled]="disabled" mode="currency" currency="INR" [minFractionDigits]="4" formControlName="nav"></p-inputNumber>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="group-section row"> -->
+      <div class="units each-control" fxFlex="45%" fxLayout="column">
+        <span class="label">Units</span>
+        <p-inputNumber inputId="units" [disabled]="disabled" mode="decimal" [minFractionDigits]="4" formControlName="units"></p-inputNumber>
+      </div>
+
+      <div class="units each-control" fxFlex="45%" fxLayout="column">
+        <span class="label">Charges</span>
+        <p-inputNumber inputId="charges" [disabled]="disabled" mode="currency" currency="INR" locale="en-IN"  [minFractionDigits]="4" formControlName="charges"></p-inputNumber>
+      </div>
+      <!-- </div> -->
+
+      <div class="footer action-button" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="1rem" fxFlex="100%">
+        <!-- <p-button label="Save" icon="pi pi-check" styleClass="p-button" type="submit" [disabled]="fundPurchaseForm.invalid && !saveApiInProgress" [loading]="saveApiInProgress"></p-button> -->
+      </div>
+    </div>
+
+  </form>
+
+</div>

@@ -1,0 +1,11 @@
+.funds-purchase-container {
+  .funds-purchase-form {
+    gap: 1rem;
+    .p-dropdown, .p-cascadeselect, .p-inputtext, .p-calendar, .p-inputnumber {
+      width: 100%;
+    }
+  }
+  .action-buttons {
+    margin-bottom: 1rem;
+  }
+}

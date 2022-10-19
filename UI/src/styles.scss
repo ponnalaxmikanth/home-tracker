@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+@import './timeline';
+
+html, body {
+  height: 100%;
+  font-size: 12px;
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+body {
+  .p-menubar {
+    padding: 0;
+  }
+
+  // .ui-widget,
+  // .ui-widget .ui-widget {
+  //   font-size: 12px !important;
+  // }
+
+  .p-component {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+  .p-menubar .p-submenu-list {
+    z-index: 2 !important;
+  }
+
+  .p-sidebar .p-sidebar-header + .p-sidebar-content {
+    height: 100%;
+  }
+
+  .p-datatable {
+    .p-datatable-thead > tr > th {
+      justify-content: center;
+    }
+    .p-datatable-tbody {
+      .p-element, .each-record > td > div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .p-element, .each-record {
+        td.date {
+          justify-content: center;
+        }
+        // td.number {
+        //   justify-content: right;
+        // }
+        td.xirr {
+          &.red {
+            background-color: red;
+            color: white;
+          }
+          &.yellow {
+            background-color: yellow;
+
+          }
+          &.orange {
+            background-color: orange;
+          }
+          &.green {
+            background-color: green;
+            color: white;
+          }
+        }
+
+        .number, .percent, .currency {
+          display: flex;
+          justify-content: right;
+        }
+        .date {
+          display: flex;
+          justify-content: center;
+        }
+
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<div class="overall-component-container" fxFlex fxLayout="column" fxLayoutGap="1rem">
+  <div class="timeline investment" fxLayout="column">
+    <div class="chart-labels" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1rem" fxFlex>
+      <div class="investment" fxLayout="row" fxLayoutAlign="start center"fxFlex="33">
+        Investment: {{ consolidated?.currentInvestment | number: '1.2-2'}}
+        ({{ consolidated?.currentInvestment / consolidated?.targetInvestment * 100 | number: '1.2-2' }}%)
+      </div>
+      <div class="current-vs-target" fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
+        Target Investment {{ consolidated?.currentInvestment / consolidated?.targetInvestment * 100 | number: '1.2-2' }}%
+      </div>
+      <div class="remaining" fxLayout="row" fxLayoutAlign="end center" fxFlex>
+        Remaining:
+        {{ consolidated?.targetInvestment - consolidated?.currentInvestment | number: '1.2-2'}}
+        ({{ (consolidated?.targetInvestment - consolidated?.currentInvestment) / consolidated?.targetInvestment * 100 | number: '1.2-2' }}%)
+      </div>
+    </div>
+    <div class="chart">
+      <span class="completed investment" style="width: {{consolidated?.currentInvestment / consolidated?.targetInvestment * 100 | number: '1.2-2'}}%;"></span>
+      <span class="remaining" style="width: {{ (consolidated?.targetInvestment - consolidated?.currentInvestment) / consolidated?.targetInvestment * 100 | number: '1.2-2'}}%;"></span>
+    </div>
+  </div>
+
+  <div class="timeline profit" fxLayout="column">
+    <div class="chart-labels" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1rem" fxFlex>
+      <span class="investment" fxLayout="row" fxLayoutAlign="start center"fxFlex="33">
+        Profit: {{ consolidated?.currentProfit | number: '1.2-2'}}
+        ({{ consolidated?.currentProfit / ( consolidated?.futureValue - consolidated?.targetInvestment ) * 100 | number: '1.2-2' }}%)
+      </span>
+      <span class="" fxLayout="row" fxLayoutAlign="center center"fxFlex="33">
+        Profit {{ consolidated?.currentProfit / ( consolidated?.futureValue - consolidated?.targetInvestment ) * 100 | number: '1.2-2' }}%
+      </span>
+      <span class="remaining" fxLayout="row" fxLayoutAlign="end center"fxFlex="33">
+        Remaining:
+        {{ consolidated?.futureValue - consolidated?.targetInvestment - consolidated?.currentProfit | number: '1.2-2'}}
+        ({{ (consolidated?.futureValue - consolidated?.targetInvestment - consolidated?.currentProfit) / ( consolidated?.futureValue - consolidated?.targetInvestment ) * 100 | number: '1.2-2' }}%)
+      </span>
+    </div>
+    <div class="chart">
+      <span class="completed profit" style="width: {{consolidated?.currentProfit / (consolidated?.futureValue - consolidated?.targetInvestment) * 100 | number: '1.2-2'}}%;"></span>
+      <span class="remaining" style="width: {{ (consolidated?.futureValue - consolidated?.targetInvestment - consolidated?.currentProfit) / (consolidated?.futureValue - consolidated?.targetInvestment) * 100 | number: '1.2-2'}}%;"></span>
+    </div>
+  </div>
+
+  <div class="timeline months" fxLayout="column">
+    <div class="chart-labels" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1rem" fxFlex>
+      <span class="months" fxLayout="row" fxLayoutAlign="start center"fxFlex="33">
+        Completed:
+        {{ consolidated?.completedMonths | number: '1.0-0'}}
+        ({{ consolidated?.completedMonths * 100 / consolidated?.totalMonths | number: '1.2-2'}}%)
+      </span>
+      <span class="" fxLayout="row" fxLayoutAlign="center center"fxFlex="33">Time: {{ consolidated?.totalMonths | number: '1.0-0'}}</span>
+      <span class="remaining" fxLayout="row" fxLayoutAlign="end center"fxFlex="33">
+        Remaining:
+        {{ consolidated?.remainingMonths | number: '1.0-0' }}
+        ({{ consolidated?.remainingMonths * 100  / consolidated?.totalMonths | number: '1.2-2'}}%)
+      </span>
+    </div>
+    <div class="chart">
+      <span class="completed months" style="width: {{consolidated?.completedMonths * 100 / consolidated?.totalMonths}}%;"></span>
+      <span class="remaining" style="width: {{consolidated?.remainingMonths * 100 / consolidated?.totalMonths}}%;"></span>
+    </div>
+  </div>
+</div>
