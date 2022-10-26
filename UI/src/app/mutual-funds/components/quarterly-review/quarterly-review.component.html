@@ -1,0 +1,60 @@
+<div class="quarterly-review-container" fxLayout="column" fxLayoutGap="1rem">
+  <!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" color="#fff" [name]="qtrlyReview" [fullScreen]="false" type="ball-scale-multiple" size="medium">
+    <p style="color: white" > Loading... </p>
+  </ngx-spinner> -->
+
+  <div class="get-dada" fxFlex fxLayoutAlign="end center">
+    <p-button label="Get Quarterly Review Info" icon="pi pi-refresh" iconPos="left" *ngIf="!apiInPrigress" (click)="getData();"></p-button>
+    <p-button label="Get Quarterly Review Info" icon="pi pi pi-spin pi-spinner" iconPos="left" *ngIf="apiInPrigress" [disabled]="apiInPrigress"></p-button>
+  </div>
+
+  <div class="grid-container" *ngIf="quarterlyReviewInfo.length > 0">
+
+    <p-table #dtq [columns]="cols" [value]="quarterlyReviewInfo" styleClass="p-datatable-sm p-datatable-gridlines" [scrollable]="true" scrollHeight="400px">
+
+    <ng-template pTemplate="caption">
+      <div fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="1rem">
+        <button type="button" pButton pRipple icon="pi pi-file" (click)="dtq.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="{{col.class}}">
+          {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+          <p-columnFilter *ngIf="col.filter" type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <!-- <tr [pSelectableRow]="rowData" class="each-record">
+        <td class="date portfolio">{{rowData.portfolio}}</td>
+        <td class="goal">{{rowData.goal}}</td>
+        <td class="current-expense">{{rowData.currentExpense}}</td>
+        <td class="target-expense">{{rowData.targetExpense}}</td>
+      </tr> -->
+      <tr [pSelectableRow]="rowData" class="each-record">
+        <td *ngFor="let col of columns">
+          <div class="{{col.class}}" *ngIf="col.type == 'date'">
+            {{rowData[col.field] | date: 'MMM-yyyy'}}
+          </div>
+          <div class="{{col.class}}" *ngIf="col.type == 'string'">
+            {{rowData[col.field]}}
+          </div>
+          <div class="{{col.class}}" *ngIf="col.type == 'number'">
+            {{rowData[col.field] | number: '1.0-0'}}
+          </div>
+          <div class="{{col.class}}" *ngIf="col.type == 'currency'">
+            {{rowData[col.field] | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}
+          </div>
+          <div class="{{col.class}}" *ngIf="col.type == 'percent'">
+            {{rowData[col.field] | number: '1.0-2'}}
+          </div>
+        </td>
+      </tr>
+
+    </ng-template>
+  </p-table>
+  </div>
+</div>

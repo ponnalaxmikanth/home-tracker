@@ -1,0 +1,52 @@
+.mutual-funds-container {
+  margin: 0.75rem;
+  .consolidated-view {
+    margin-bottom: 0.75rem;
+  }
+
+  .transaction-actions {
+    .xirr-range {
+      .xirr {
+        margin-right: 1rem;
+        border: 1px dashed;
+        padding: 0.15rem 1rem;
+
+        &.red {
+          background-color: red;
+            color: white;
+        }
+        &.yellow {
+          background-color: yellow;
+        }
+        &.orange {
+          background-color: orange;
+        }
+        &.green {
+          background-color: green;
+          color: white;
+        }
+      }
+    }
+    .download-nav {
+      .pi-cloud-download {
+        cursor: pointer;
+      }
+    }
+    .date-filter {
+      width: 13rem;
+      .p-calendar {
+        width: 100% !important;
+      }
+    }
+  }
+
+  .chart-container {
+    border: 1px solid gray;
+    .title {
+      display: flex;
+      justify-content: center;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+<div class="current-month-view-container">
+  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
+    <p-inputSwitch [(ngModel)]="chartView" onLabel="Group" offLabel="No Group" (onChange)="handleViewChangeChange($event);"></p-inputSwitch>
+  </div>
+  <div class="chart-view" *ngIf="chartView">
+    <div class="current-month-intests" fxLayout="row wrap 1rem" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+      <ng-template ngFor let-goal [ngForOf]="currentMonth" let-i="index">
+        <div fxFlex="0 1 calc(49%-0.5rem)" fxLayout="column wrap 1rem" fxLayoutGap="0.5rem" class="each-goal {{goal?.goal == 'Un Mapped' ? 'unmapped': goal?.goal}}">
+          <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="name"><b>{{goal?.portfolio}} - {{goal?.goal}}</b></div>
+            <div class="period">Period: {{ goal?.startDate | date: 'MM/dd/yyyy' }} - {{ goal?.endDate | date: 'MM/dd/yyyy' }}</div>
+          </div>
+
+          <div class="timeline" fxLayout="column wrap" fxLayoutGap="0.5rem">
+            <div class="chart-labels" fxLayout="row" fxLayoutAlign="space-between center">
+              <span class="investment">Investment: {{goal?.monthInvestment ?? 0 | currency:'INR': 'symbol' :'1.0-0':'en-IN'}} ({{goal?.investmentPer | number: '1.2-2'}}%)</span>
+              <span class="remaining">Target: {{goal?.monthlyTarget | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</span>
+              <span class="remaining">Remaining: {{goal?.monthRemaining | currency:'INR': 'symbol' :'1.0-0':'en-IN' }} ({{ goal?.remainingPer | number: '1.2-2'}}%)</span>
+            </div>
+            <div class="chart">
+              <span class="completed investment" style="width: {{ goal?.investmentPer | number: '1.2-2'}}%;"></span>
+              <span class="remaining" style="width: {{ goal?.remainingPer | number: '1.2-2'}}%;"></span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="table-view" *ngIf="!chartView">
+    <ht-table-view [data]="currentMonth"></ht-table-view>
+  </div>
+</div>

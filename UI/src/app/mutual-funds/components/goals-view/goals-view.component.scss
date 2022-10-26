@@ -1,0 +1,40 @@
+.goals-view-container {
+  .goals-consolidated-container {
+    line-height: 1.75rem;
+    .consolidated {
+      border: 1px solid gray;
+      padding: 0.5rem;
+    }
+  }
+  .horizontal-line {
+    border: 1px solid orange;
+    display: flex;
+    margin: 1rem 0;
+  }
+
+  .goals-view-list-container {
+    .each-goal {
+      border: 1px solid gray;
+      margin: 0.25rem;
+      padding: 0.5rem;
+      line-height: 2rem;
+
+      .timeline {
+        .chart {
+          .investment {
+            // background-color: yellowgreen;
+            border-radius: 1rem 0 0 1rem;
+          }
+          .profit {
+            // background-color: green;
+            border-radius: 0 1rem 1rem 0;
+          }
+          .remaining {
+
+          }
+        }
+      }
+    }
+  }
+
+}

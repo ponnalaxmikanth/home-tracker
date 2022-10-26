@@ -1,0 +1,20 @@
+<div class="stocks-performance-container">
+  <p-table [columns]="cols" [value]="stocksPerformance" styleClass="p-datatable-sm" sortField="month3CloseGrowth"
+      [sortOrder]="-1">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
+              {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+        </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td *ngFor="let col of columns">
+          <div *ngIf="col.type == 'string'" >{{rowData[col.field]}}</div>
+          <div *ngIf="col.type == 'number'">{{rowData[col.field] | number: col.format}}</div>
+        </td>
+    </tr>
+    </ng-template>
+  </p-table>
+</div>

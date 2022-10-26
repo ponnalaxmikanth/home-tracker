@@ -1,0 +1,45 @@
+<div class="category-funds-performance">
+  <p-table [value]="categoryFunds" dataKey="schemaCode" styleClass="p-datatable-sm p-datatable-gridlines" responsiveLayout="scroll" [scrollable]="true" scrollHeight="90vh">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+          <!-- <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" [class.category-header]="col.field == 'category'">
+              <div *ngIf="col.field == 'classification'">
+                {{col.header}}
+                <p-sortIcon field="{{col.field}}"></p-sortIcon>
+              </div>
+              <div *ngIf="col.field != 'classification'">
+                {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+              </div>
+        </th> -->
+        <th pSortableColumn="schemaName"><div class="schema-name">Schema Name <p-sortIcon field="schemaName"></p-sortIcon></div></th>
+        <th><div class="current-nav">Current</div></th>
+        <th><div class="one-month-nav">1 Month</div></th>
+        <th pSortableColumn="oneGrowth"><div class="one-month-growth">1 Month Growth <p-sortIcon field="oneGrowth"></p-sortIcon></div></th>
+        <th><div class="three-months-nav">3 Months</div></th>
+        <th pSortableColumn="threeGrowth"><div class="three-months-growth">3 Months Growth <p-sortIcon field="threeGrowth"></p-sortIcon></div></th>
+        <th><div class="six-months-nav">6 Months</div></th>
+        <th pSortableColumn="sixGrowth"><div class="six-months-growth">6 Months Growth <p-sortIcon field="sixGrowth"></p-sortIcon></div></th>
+        <th><div class="nine-months-nav">9 Months</div></th>
+        <th pSortableColumn="nineGrowth"><div class="nine-months-growth">9 Months Growth <p-sortIcon field="nineGrowth"></p-sortIcon></div></th>
+        <th><div class="one-year-nav">1 Yr</div></th>
+        <th pSortableColumn="yearGrowth"><div class="one-year-growth">1 Yr Growth <p-sortIcon field="yearGrowth"></p-sortIcon></div></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td class=""><div class="schema-name">{{rowData.schemaName}}</div></td>
+        <td class="number"><div class="current-nav">{{rowData.current}}</div></td>
+        <td class="number"><div class="one-month-nav">{{rowData.one | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="one-month-growth">{{rowData.oneGrowth | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="three-months-nav">{{rowData.three | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="three-months-growth">{{rowData.threeGrowth | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="six-months-nav">{{rowData.six | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="six-months-growth">{{rowData.sixGrowth | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="nine-months-nav">{{rowData.nine | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="nine-months-growth">{{rowData.nineGrowth | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="one-year-nav">{{rowData.year | number: '2.2-2' }}</div></td>
+        <td class="number"><div class="one-year-growth">{{rowData.yearGrowth | number: '2.2-2' }}</div></td>
+    </tr>
+    </ng-template>
+  </p-table>
+</div>

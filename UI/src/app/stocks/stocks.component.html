@@ -1,0 +1,15 @@
+<div class="stocks-container" fxFlex fxLayout="column" fxLayoutGap="1rem">
+  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
+    <div class="date-filter">
+      <p-calendar [(ngModel)]="dateValue" [showTransitionOptions]="'0ms'" selectionMode="range" [hideTransitionOptions]="'0ms'" icon="pi pi-calendar"
+        [readonlyInput]="true" [maxDate]="maxDateValue" (onSelect)="dateChanged()"></p-calendar>
+    </div>
+    <div class="download-indices-data" (click)="downloadIndicesData();">
+      <span *ngIf="!downloadingData" class="pi pi-cloud-download" style="font-size: 1.5rem"></span>
+      <span *ngIf="downloadingData" class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></span>
+    </div>
+    <!-- <div class="download-indices">
+      <p-button label="Download Indices" icon="pi pi-cloud-download" class="p-button-outlined" iconPos="left" (click)="downloadIndices($event)"></p-button>
+    </div> -->
+  </div>
+</div>

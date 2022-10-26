@@ -1,0 +1,106 @@
+<div class="mutual-funds-container">
+  <div class="consolidated-view">
+    <ht-consolidated-view [consolidateData]="consolidatedResponse"></ht-consolidated-view>
+  </div>
+
+  <div class="transaction-actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
+    <div class="xirr-range" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
+      <div class="xirr red">xirr <= 12</div>
+      <div class="xirr yellow"><span class="">> 12 & <= 15</span></div>
+      <div class="xirr orange"><span class="">> 15 & <= 20</span></div>
+      <div class="xirr green"><span class="">> 20</span></div>
+    </div>
+    <div class="nav-details">
+      <span class="last-download-date">
+        {{NAVDownloadDetails?.navDate  | date: 'dd-MMM-yyyy' }} &nbsp;({{ NAVDownloadDetails?.count | number:'2.0-0' }})
+      </span>
+    </div>
+    <div class="download-nav" (click)="downloadFundsNAV();">
+      <span *ngIf="!downloadingNAV" class="pi pi-cloud-download" style="font-size: 1.5rem"></span>
+      <span *ngIf="downloadingNAV" class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></span>
+    </div>
+    <div class="date-filter">
+      <p-calendar [(ngModel)]="dateValue" [showTransitionOptions]="'0ms'" selectionMode="range" [hideTransitionOptions]="'0ms'" icon="pi pi-calendar" [readonlyInput]="true"
+        (onSelect)="dateChanged()"></p-calendar>
+    </div>
+    <div class="add-transaction">
+      <p-button label="Add Transaction" icon="pi pi-plus" iconPos="left" (click)="showAddPunchaseFunds = true"></p-button>
+    </div>
+    <div class="group-transactions">
+      <p-inputSwitch [(ngModel)]="groupTransactions" onLabel="Group" offLabel="No Group" (onChange)="handleGrpTransChange($event)"></p-inputSwitch>
+    </div>
+  </div>
+
+  <p-tabView>
+    <p-tabPanel header="Goals">
+      <ht-goals-view [dateFilter]="dateValue"></ht-goals-view>
+    </p-tabPanel>
+
+    <p-tabPanel header="Current Month">
+      <ht-current-month-view></ht-current-month-view>
+    </p-tabPanel>
+
+    <p-tabPanel header="Monthly View">
+      <div class="chart-container monthly-invest-view">
+          <div class="title">Monthly - Investment</div>
+          <div class="chart" style="position: relative; height:65vh; width:95vw">
+            <canvas #monthlyViewChart></canvas>
+          </div>
+        </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Current Investments">
+      <div class="category-section" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem">
+        <div class="chart-container category-invest-view" fxFlex="1 1 50%">
+          <div class="title">Category</div>
+          <div class="chart" style="position: relative; width:45vw; height: 65vh;">
+            <canvas #cICategoryChart></canvas>
+            <!-- <p-chart type="line" [options]="multiAxisOptions" [data]="cICategoryChartData"></p-chart> -->
+          </div>
+        </div>
+
+        <div class="chart-container fy-current-view" fxFlex="1 1 50%">
+          <div class="title">Financial Year</div>
+          <div class="chart" style="position: relative; width:45vw; height: 65vh;">
+            <canvas #cIFYYearChart></canvas>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Category Allocation">
+      <div class="chart-container category-allocation">
+        <!-- <div class="section"> -->
+          <div class="title">Category - Allocations</div>
+          <div class="chart"style="position: relative; height:65vh; width:95vw;">
+            <canvas #categoryViewChart></canvas>
+          </div>
+        <!-- </div> -->
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Monthly Goal View">
+      <ht-monthly-goal-view [monthlyGoalViewData]="monthlyGoalViewData"></ht-monthly-goal-view>
+    </p-tabPanel>
+
+    <p-tabPanel header="Transactions">
+      <div class="transactions-view">
+        <ht-transactions [fundTransactions]="transactions" [groupTransactions]="groupTransactions"></ht-transactions>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Daily History">
+      <ht-daily-history [dateFilter]="dateValue"></ht-daily-history>
+    </p-tabPanel>
+
+    <p-tabPanel header="Quarterly Review">
+      <ht-quarterly-review></ht-quarterly-review>
+    </p-tabPanel>
+
+    <p-sidebar [(visible)]="showAddPunchaseFunds" position="right" styleClass="p-sidebar-md" [showCloseIcon]="false">
+      <ht-add-fund-transaction></ht-add-fund-transaction>
+    </p-sidebar>
+
+  </p-tabView>
+
+</div>

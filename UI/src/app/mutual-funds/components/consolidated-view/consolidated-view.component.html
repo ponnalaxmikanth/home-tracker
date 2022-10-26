@@ -1,0 +1,41 @@
+<div class="consolidated-view-container" fxLayout="row" fxLayoutAlign="space-evenly">
+  <div class="fund-houses" fxLayout="column" fxLayoutAlign="center center">
+    <span class="label">No of Houses</span>
+    <span class="value">{{consolidatedResponse?.noOfFundHouses ?? 0}}</span>
+  </div>
+  <div class="vertical-divider">&nbsp;&nbsp;</div>
+  <div class="no-of-funds" fxLayout="column" fxLayoutAlign="center center">
+    <span class="label">No of Funds</span>
+    <span class="value">{{consolidatedResponse?.noOfFunds ?? 0}}</span>
+  </div>
+  <div class="vertical-divider"></div>
+  <div class="no-of-folios" fxLayout="column" fxLayoutAlign="center center">
+    <span class="label">No of Folios</span>
+    <span class="value">{{consolidatedResponse?.noOfFolios ?? 0 }}</span>
+  </div>
+  <div class="vertical-divider"></div>
+  <div class="current-investment" fxLayout="column" fxLayoutAlign="center center">
+    <span class="label">Investment</span>
+    <span class="value">{{consolidatedResponse?.investment ?? 0 | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</span>
+  </div>
+  <div class="vertical-divider"></div>
+  <div class="current-profit" fxLayout="column" fxLayoutAlign="center center">
+    <span class="label">Profit</span>
+    <span class="value">{{consolidatedResponse?.profit ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN' }}</span>
+  </div>
+  <div class="vertical-divider"></div>
+  <div class="current-profit-percent" fxLayout="column" fxLayoutAlign="center center">
+    <span class="label">Profit (%)</span>
+    <span class="value">{{consolidatedResponse?.absoulteReturn ?? 0 | number:'2.2-2' }}</span>
+  </div>
+  <div class="vertical-divider"></div>
+  <div class="current-xirr" fxLayout="column" fxLayoutAlign="center center">
+    <span class="label">XIRR</span>
+    <span class="value">{{consolidatedResponse?.xirr ?? 0 | number:'2.2-2' }}</span>
+  </div>
+  <div class="vertical-divider"></div>
+  <div class="current-month-investment" fxLayout="column" fxLayoutAlign="center center">
+    <span class="label">Current Month</span>
+    <span class="value">{{consolidatedResponse?.currentMonth ?? 0  | currency:'INR':  'symbol' :'1.0-0':'en-IN' }}</span>
+  </div>
+</div>

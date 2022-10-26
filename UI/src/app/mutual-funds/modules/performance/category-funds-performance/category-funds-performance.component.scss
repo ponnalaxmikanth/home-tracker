@@ -1,0 +1,14 @@
+.category-funds-performance {
+  .p-datatable.p-datatable-sm {
+    .p-datatable-thead > tr > th {
+      .schema-name {
+        min-width: 30rem;
+      }
+    }
+    .p-datatable-tbody > tr > td {
+      .schema-name {
+        min-width: 30rem;
+      }
+    }
+  }
+}

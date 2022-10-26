@@ -1,0 +1,24 @@
+.timeline {
+  .chart {
+    height: 1rem;
+    border: 1px solid sandybrown;
+    border-radius: 1rem;
+    display: flex;
+    .completed {
+      border-radius: 1rem;
+      &.investment {
+        background-color: yellowgreen;
+      }
+      &.profit {
+        background-color: green;
+      }
+      &.months {
+        background-color: green;
+      }
+
+    }
+    .remaining {
+
+    }
+  }
+}
