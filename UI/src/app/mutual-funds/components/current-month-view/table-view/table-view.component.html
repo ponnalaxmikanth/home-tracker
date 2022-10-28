@@ -1,25 +1,154 @@
 <div class="current-month-invests-container" *ngIf="currentInvestments && currentInvestments.length > 0">
+
+  <p-table #dt [columns]="cols" [value]="currentInvestments" styleClass="p-datatable-sm p-datatable-gridlines" sortField="goal" [sortOrder]="0" [scrollable]="true" scrollHeight="500px" scrollDirection="both">
+
+    <ng-template pTemplate="header" let-columns>
+      <tr class="p-element">
+        <th class="portfolio" pFrozenColumn>&nbsp;</th>
+        <th class="goal" pFrozenColumn>&nbsp;</th>
+        <th class="folio-number" pFrozenColumn>&nbsp;</th>
+        <th class="schema-name" pFrozenColumn>&nbsp;</th>
+        <th class="category" pFrozenColumn>&nbsp;</th>
+        <th class="isin">&nbsp;</th>
+
+        <th class="start-date">&nbsp;</th>
+        <th class="end-date">&nbsp;</th>
+
+        <th class="target-amount">&nbsp;</th>
+        <th class="overall-group-header overall-remaining-per" colspan="4">Overall</th>
+        <th class="current-month-group-header current-month-remaining-per" colspan="4">Current Month</th>
+        <!-- <th class="number current-month-remaining-amount">Current Month Remaining</th> -->
+        <th class="is-active">&nbsp;</th>
+      </tr>
+      <tr class="p-element">
+        <th class="portfolio" pFrozenColumn pSortableColumn="portfolio">Portfolio <p-sortIcon field="portfolio"></p-sortIcon></th>
+        <th class="goal" pFrozenColumn pSortableColumn="goal">Goal
+          <p-sortIcon field="goal" pFrozenColumn></p-sortIcon>
+          <p-columnFilter type="text" field="goal" display="menu"></p-columnFilter>
+        </th>
+        <th class="folio-number" pFrozenColumn pSortableColumn="folioNumber">Folio
+          <p-sortIcon field="folioNumber"></p-sortIcon>
+          <p-columnFilter type="text" field="folioNumber" display="menu"></p-columnFilter>
+        </th>
+        <th class="schema-name" pFrozenColumn pSortableColumn="schemaName">Schema <p-sortIcon field="schemaName"></p-sortIcon></th>
+        <th class="category" pFrozenColumn pSortableColumn="category">Category
+          <p-sortIcon field="category"></p-sortIcon>
+          <p-columnFilter type="text" field="category" display="menu"></p-columnFilter>
+        </th>
+        <th class="isin" pSortableColumn="isin">ISIN
+          <p-sortIcon field="isin"></p-sortIcon>
+          <p-columnFilter type="text" field="isin" display="menu"></p-columnFilter>
+        </th>
+
+        <th class="date start-date" pSortableColumn="startDate">Start Date<p-sortIcon field="startDate"></p-sortIcon></th>
+        <th class="date end-date" pSortableColumn="endDate">End Date<p-sortIcon field="endDate"></p-sortIcon></th>
+
+        <th class="number amount target-amount" pSortableColumn="monthlyTargetAmount">Target<p-sortIcon field="monthlyTargetAmount"></p-sortIcon></th>
+
+        <th class="number amount overall-investment" pSortableColumn="overallInvestment">Investment<p-sortIcon field="overallInvestment"></p-sortIcon></th>
+        <th class="number percent overall-investment-per" pSortableColumn="overallInvestment">Investment (%)<p-sortIcon field="overallInvestment"></p-sortIcon></th>
+
+        <th class="number amount overall-remaining" pSortableColumn="overallRemaining">Remaining<p-sortIcon field="overallRemaining"></p-sortIcon></th>
+        <th class="number percent overall-remaining-per" pSortableColumn="overallRemaining">Remaining (%)<p-sortIcon field="overallRemaining"></p-sortIcon></th>
+
+        <th class="number amount current-month-investment" pSortableColumn="currentMonthInvestment">Investment <p-sortIcon field="currentMonthInvestment"></p-sortIcon></th>
+        <th class="number percent current-month-investment-per" pSortableColumn="currentMonthInvestment">Investment (%)<p-sortIcon field="currentMonthInvestment"></p-sortIcon></th>
+
+        <th class="number amount current-month-remaining" pSortableColumn="currentMonthRemaining">Remaining <p-sortIcon field="currentMonthRemaining"></p-sortIcon></th>
+        <th class="number percent current-month-remaining-per" pSortableColumn="currentMonthRemaining">Remaining (%)<p-sortIcon field="currentMonthRemaining"></p-sortIcon></th>
+        <th class="is-active" pSortableColumn="isActive">
+          Status
+          <p-sortIcon field="isActive"></p-sortIcon>
+          <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData" class="each-record">
+        <td class="portfolio" pFrozenColumn>{{rowData.portfolio}}</td>
+        <td class="goal" pFrozenColumn>{{rowData.goal}}</td>
+        <td class="folio-number" pFrozenColumn>{{rowData.folioNumber}}</td>
+        <td class="schema-name" pFrozenColumn>{{rowData.schemaName}} ({{rowData.schemaCode}})</td>
+        <td class="category" pFrozenColumn>{{rowData.category}}</td>
+        <td class="isin">{{rowData.isin}}</td>
+
+        <td class="date start-date">{{rowData.startDate | date: 'MM/dd/yyyy'}}</td>
+        <td class="date end-date">{{rowData.endDate | date: 'MM/dd/yyyy'}}</td>
+
+        <td class="number amount target-amount">{{rowData.monthlyTargetAmount | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+
+        <td class="number amount overall-investment">{{rowData.overallInvestment | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="number percent overall-investment-per">{{rowData.overallInvestPer | number: '2.2-2'}}%</td>
+
+        <td class="number amount overall-remaining">{{rowData.overallRemaining | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="number percent overall-remaining-per">{{rowData.overallRemainingPer | number: '2.2-2'}}%</td>
+
+
+        <td class="number amount current-month-investment">{{rowData.currentMonthInvestment | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="number percent current-month-investment-per">{{rowData.currentMonthInvestPer | number: '2.2-2'}}%</td>
+
+        <td class="number amount current-month-remaining">{{rowData.currentMonthRemaining | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="number percent current-month-remaining-per">{{rowData.currentMonthRemainingPer | number: '2.2-2'}}%</td>
+
+        <td class="is-active">{{rowData.isActive}}</td>
+      </tr>
+    </ng-template>
+</p-table>
+
+  <!-- <div class="schema-investment-container">
+    <ng-template ngFor let-schemaInvestment [ngForOf]="currentInvestments" let-i="index">
+      <div class="schema-investment">
+        <div class="schema-details">
+          <div class="schema-name">{{schemaInvestment?.schemaName}}</div>
+          <div class="schema-code">{{schemaInvestment?.schemaCode}} ({{schemaInvestment?.isin}})</div>
+          <div class="folio-number">{{schemaInvestment?.folioNumber}}</div>
+        </div>
+        <div class="date-details">
+          <div class="start-date">Start Date: {{schemaInvestment?.startDate | date: 'MM/dd/yyyy'}}</div>
+          <div class="end-date">End Date: {{schemaInvestment?.endDate | date: 'MM/dd/yyyy'}}</div>
+          <div class="target-amount">SIP: {{schemaInvestment?.monthlyTargetAmount | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</div>
+        </div>
+        <div class="overall-details">
+          <div class="overall-target">Overall Target: {{schemaInvestment?.overallTarget | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</div>
+          <div class="overall-investment">Overall Investment: {{schemaInvestment?.overallInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} ({{schemaInvestment?.overallInvestPer | number: '1.2-2'}} %)</div>
+          <div class="overall-remaining">Pending Investment: {{schemaInvestment?.overallRemaining | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} ({{schemaInvestment?.overallRemainingPer | number: '1.2-2'}} %)</div>
+        </div>
+        <div class="current-month-details">
+          <div class="current-month-target">SIP: {{schemaInvestment?.monthlyTargetAmount | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</div>
+          <div class="current-month-investment">Investment: {{schemaInvestment?.currentMonthInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} ({{schemaInvestment?.currentMonthInvestPer | number: '1.2-2'}} %)</div>
+          <div class="current-month-remaining">Remaining: {{schemaInvestment?.currentMonthRemaining | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} ({{schemaInvestment?.currentMonthRemainingPer | number: '1.2-2'}} %)</div>
+        </div>
+      </div>
+    </ng-template>
+  </div> -->
+
   <!-- <p-table #dt [columns]="cols" [value]="transactions" styleClass="p-datatable-sm p-datatable-gridlines" sortField="transactionDate"
   [sortOrder]="-1"
   [scrollable]="true" scrollHeight="440px"> -->
 
-  <p-table #dt [columns]="cols" [value]="currentInvestments" styleClass="p-datatable-sm p-datatable-gridlines"
-  sortField="transactionDate" [sortOrder]="-1" [scrollable]="true" scrollHeight="490px" sortField="remainingAmount"
-  [sortOrder]="-1">
+  <!-- <p-table [columns]="cols" [value]="currentInvestments" styleClass="p-datatable-sm p-datatable-gridlines" [sortOrder]="-1" [scrollable]="true" scrollHeight="490px" sortField="remainingAmount" scrollDirection="both">
 
     <ng-template pTemplate="caption">
       <div fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="1rem">
         <p-inputSwitch [(ngModel)]="showActive" onLabel="Group" offLabel="No Group" (onChange)="handleActiveChange($event);"></p-inputSwitch>
-          <!-- <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
-          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button> -->
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="{{col.class}}" hidden="{{!col.display}}">
-            {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
-            <p-columnFilter *ngIf="col.filter" type="text" field="{{col.field}}" display="menu"></p-columnFilter>
-          </th>
+
+          <th class="portfolio">Portfolio</th>
+          <th class="goal">Goal</th>
+          <th class="folio-number">Folio</th>
+          <th class="schema-name">Schema</th>
+          <th class="isin">ISIN</th>
+
+          <th class="number target-amount">Target</th>
+          <th class="number investment">Current Month Invest</th>
+          <th class="number investment-percent">Current Month Invest %</th>
+          <th class="number percent remaining-amount">Current Month Remaining</th>
+          <th class="number percent remaining-percent">Current Month Remaining %</th>
+          <th class="is-active">Active</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -27,18 +156,17 @@
         <td class="portfolio">{{rowData.portfolio}}</td>
         <td class="goal">{{rowData.goal}}</td>
         <td class="folio-number">{{rowData.folioNumber}}</td>
-        <!-- <td class="number schema-code">{{rowData.schemaCode}}</td> -->
         <td class="schema-name">{{rowData.schemaName}} ({{rowData.schemaCode}})</td>
         <td class="isin">{{rowData.isin}}</td>
 
-        <td class="number target-amount">{{rowData.targetAmount | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
-        <td class="number investment">{{rowData.investment | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="number target-amount">{{rowData.monthlyTargetAmount | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
+        <td class="number investment">{{rowData.currentMonthInvestment | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
         <td class="number investment-percent">{{rowData.investmentPer | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}%</td>
-        <td class="number percent remaining-amount">{{rowData.remainingAmount | number: '2.2-2'}}</td>
+        <td class="number percent remaining-amount">{{rowData.currentMonthRemaining | number: '2.2-2'}}</td>
         <td class="number percent remaining-percent">{{rowData.remainingPer | number: '2.2-2'}}%</td>
         <td class="is-active">{{rowData.isActive}}</td>
     </tr>
     </ng-template>
-  </p-table>
+  </p-table> -->
 
 </div>
