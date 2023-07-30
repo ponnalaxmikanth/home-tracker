@@ -1,0 +1,14 @@
+<div class="home-container">
+    <div class="summary">
+        <ht-summary [budget]="transactions?.budget" [credit]="transactions?.credit" [debit]="transactions?.debit"></ht-summary>
+    </div>
+    <div class="actions">
+        <div class="date-filter">
+            <p-calendar [(ngModel)]="dateValue" [showTransitionOptions]="'0ms'" selectionMode="range" [hideTransitionOptions]="'0ms'" icon="pi pi-calendar" [readonlyInput]="true"
+              (onSelect)="dateChanged()"></p-calendar>
+          </div>
+    </div>
+    <div class="transactions-grid">
+        <ht-transactions [transactionsData]="transactions?.transactions"></ht-transactions>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="transactions-container">
+    <p-table #dt [columns]="cols" [value]="montlhyView" styleClass="p-datatable-sm p-datatable-gridlines"
+    sortField="date" [sortOrder]="-1" [scrollable]="true" scrollHeight="490px">
+  
+      <ng-template pTemplate="caption">
+        <div fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="1rem">
+            <!-- <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button> -->
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="{{col.class}}" hidden="{{!col.display}}">
+              {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+              <p-columnFilter *ngIf="col.filter" type="{{col.type}}" field="{{col.field}}" display="menu"></p-columnFilter>
+            </th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData" class="each-record">
+          <td class="date">{{rowData.date | date: 'MMM-yyyy'}}</td>
+          <td class="investment">{{rowData.investment | currency:'INR': 'symbol' :'1.0-0':'en-IN'}}</td>
+          <td class="currentValue">{{rowData.currentValue | currency:'INR': 'symbol' :'1.0-0':'en-IN'}}</td>
+          <td class="profit">{{rowData.profit | currency:'INR': 'symbol' :'1.0-0':'en-IN'}}</td>
+          <td class="profitPer">{{rowData.profitPer | number: '2.2-2'}}</td>
+          <td class="xirr number percent" [class.red]="rowData['xirr'] <= 12" [class.yellow]="rowData['xirr'] > 12 && rowData['xirr'] <= 15"
+            [class.orange]="rowData['xirr'] > 15 && rowData['xirr'] <= 20" [class.green]="rowData['xirr'] > 20">{{rowData.xirr | number: '2.2-2'}} %</td>
+      </tr>
+      </ng-template>
+    </p-table>
+  
+  </div>
+  

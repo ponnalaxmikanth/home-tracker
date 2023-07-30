@@ -1,6 +1,6 @@
 <div class="current-month-invests-container" *ngIf="currentInvestments && currentInvestments.length > 0">
 
-  <p-table #dt [columns]="cols" [value]="currentInvestments" styleClass="p-datatable-sm p-datatable-gridlines" sortField="goal" [sortOrder]="0" [scrollable]="true" scrollHeight="500px" scrollDirection="both">
+  <p-table #dt [columns]="cols" [value]="currentInvestments" styleClass="p-datatable-sm p-datatable-gridlines" sortField="goal" [sortOrder]="0" [scrollable]="true" scrollHeight="400px" scrollDirection="both">
 
     <ng-template pTemplate="header" let-columns>
       <tr class="p-element">
@@ -66,11 +66,11 @@
 
     <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr [pSelectableRow]="rowData" class="each-record">
-        <td class="portfolio" pFrozenColumn>{{rowData.portfolio}}</td>
-        <td class="goal" pFrozenColumn>{{rowData.goal}}</td>
-        <td class="folio-number" pFrozenColumn>{{rowData.folioNumber}}</td>
-        <td class="schema-name" pFrozenColumn>{{rowData.schemaName}} ({{rowData.schemaCode}})</td>
-        <td class="category" pFrozenColumn>{{rowData.category}}</td>
+        <td class="portfolio" pFrozenColumn [frozen]="true">{{rowData.portfolio}}</td>
+        <td class="goal" pFrozenColumn [frozen]="true">{{rowData.goal}}</td>
+        <td class="folio-number" pFrozenColumn [frozen]="true">{{rowData.folioNumber}}</td>
+        <td class="schema-name" pFrozenColumn [frozen]="true">{{rowData.schemaName}} ({{rowData.schemaCode}})</td>
+        <td class="category" pFrozenColumn [frozen]="true">{{rowData.category}}</td>
         <td class="isin">{{rowData.isin}}</td>
 
         <td class="date start-date">{{rowData.startDate | date: 'MM/dd/yyyy'}}</td>

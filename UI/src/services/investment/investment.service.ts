@@ -44,8 +44,9 @@ export class InvestmentService {
     return this.http.get(this.baseUrl + "/Goals");
   }
 
-  getCurrentMonthTracker(portfolioID: number) {
-    return this.http.get(this.baseUrl + "/CurrentMonthTracker?portfolioID=" + portfolioID);
+  getCurrentMonthTracker(portfolioID: number, date: Date) {
+    let fdate =this.datepipe.transform(date, 'MM/dd/yyyy');
+    return this.http.get(this.baseUrl + "/CurrentMonthTracker?date=" + fdate + "&portfolioID=" + portfolioID);
   }
 
 }

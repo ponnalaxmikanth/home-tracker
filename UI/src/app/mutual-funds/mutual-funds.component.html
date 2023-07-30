@@ -33,7 +33,7 @@
 
   <p-tabView>
     <p-tabPanel header="Goals">
-      <ht-goals-view [dateFilter]="dateValue"></ht-goals-view>
+      <ht-goals-view [dateFilter]="dateValue" [yearOldReview]="yearOldInvestReview"></ht-goals-view>
     </p-tabPanel>
 
     <p-tabPanel header="Current Month">
@@ -42,9 +42,15 @@
 
     <p-tabPanel header="Monthly View">
       <div class="chart-container monthly-invest-view">
-          <div class="title">Monthly - Investment</div>
-          <div class="chart" style="position: relative; height:65vh; width:95vw">
+        <div class="header-section">
+          <div class="left-section"><div class="title">Monthly - Investment</div></div>
+          <div class="right-section"><p-inputSwitch [(ngModel)]="chartView.monthlyView"></p-inputSwitch></div>
+        </div>
+          <div class="chart" style="position: relative; height:65vh; width:95vw" [hidden]="chartView.monthlyView" >
             <canvas #monthlyViewChart></canvas>
+          </div>
+          <div class="table-view" [hidden]="!chartView.monthlyView">
+            <ht-monthly-table-view [monthlyTracker]="portfolioInfo?.monthlyTracker"></ht-monthly-table-view>
           </div>
         </div>
     </p-tabPanel>

@@ -10,6 +10,7 @@ export class MonthlyGoalViewComponent implements OnInit {
   @Input() monthlyGoalViewData: any;
   public goalViewData: any;
   public cols: any[] = [];
+  public goals: any[] = [];
 
   constructor() {
     this.cols = [
@@ -30,7 +31,12 @@ export class MonthlyGoalViewComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.monthlyGoalViewData) {
+      this.goals = [];
       this.goalViewData = changes.monthlyGoalViewData.currentValue;
+      const uniqueGoals = [...new Set(this.goalViewData.map((item: any) => item.goalName))];
+        uniqueGoals.forEach(element => {
+          this.goals.push({label: element, value: element});
+      });
     }
   }
 

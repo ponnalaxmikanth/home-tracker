@@ -14,6 +14,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { DropdownModule } from 'primeng/dropdown';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { NgxSpinnerModule } from 'ngx-spinner';
 // import { ChartModule } from 'primeng/chart';
 
 import { MutualFundsRoutingModule } from './mutual-funds-routing.module';
@@ -29,8 +30,8 @@ import { AddFundTransactionComponent } from './components/add-fund-transaction/a
 // import { CategoryPerformanceComponent } from './category-performance/category-performance.component';
 import { GoalsModule } from './modules/goals/goals.module';
 import { QuarterlyReviewComponent } from './components/quarterly-review/quarterly-review.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { TableViewComponent } from './components/current-month-view/table-view/table-view.component';
+import { MonthlyTableViewComponent } from './components/monthly-table-view/monthly-table-view.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { TableViewComponent } from './components/current-month-view/table-view/t
     MonthlyGoalViewComponent,
     AddFundTransactionComponent,
     QuarterlyReviewComponent,
-    TableViewComponent
+    TableViewComponent,
+    MonthlyTableViewComponent
   ],
   imports: [
     CommonModule,

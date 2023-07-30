@@ -1,6 +1,10 @@
 <div class="current-month-view-container">
   <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
-    <p-inputSwitch [(ngModel)]="chartView" onLabel="Group" offLabel="No Group" (onChange)="handleViewChangeChange($event);"></p-inputSwitch>
+    <div class="date-filter">
+      <p-calendar [(ngModel)]="dateValue" view="month" dateFormat="MM-yy" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" icon="pi pi-calendar" [readonlyInput]="true"
+        (onSelect)="dateChanged()"></p-calendar>
+    </div>
+    <p-inputSwitch [(ngModel)]="chartView"  onLabel="Group" offLabel="No Group" (onChange)="handleViewChangeChange($event);"></p-inputSwitch>
   </div>
   <div class="chart-view" *ngIf="chartView">
     <div class="current-month-intests" fxLayout="row wrap 1rem" fxLayoutAlign="start center" fxLayoutGap="0.5rem">

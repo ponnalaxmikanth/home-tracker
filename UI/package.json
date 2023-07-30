@@ -5,12 +5,13 @@
     "ng": "ng",
     "start": "ng serve --port=4211",
     "build": "ng build",
-    "build:prod": "ng build --prod",
+    "build:prod": "ng build --aot=true --common-chunk=true --optimization=true --progress=true --named-chunks=false",
     "build:stats": "ng build --stats-json",
     "analyze": "webpack-bundle-analyzer dist/home-tracker/stats.json",
     "build:analyze": "npm run build:stats && npm run analyze",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test-headless": "ng test --watch=false --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {

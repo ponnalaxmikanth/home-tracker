@@ -1,0 +1,35 @@
+<div class="transactions-container">
+    <p-table #dt [columns]="cols" [value]="transactions" styleClass="p-datatable-sm p-datatable-gridlines"
+    sortField="transactionDate" [sortOrder]="-1" [scrollable]="true" scrollHeight="550px">
+  
+      <ng-template pTemplate="caption">
+        <div fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="1rem">
+            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <!-- <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button> -->
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="{{col.class}}" hidden="{{!col.display}}">
+              {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                <p-columnFilter *ngIf="col.filter" type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+            </th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData" class="each-record">
+            <td *ngFor="let col of columns"  class="{{col.class}}">
+              <div class="{{col.class}}" *ngIf="col.type == 'string'">
+                {{rowData[col.field]}}
+              </div>
+              <div class="{{col.class}}" *ngIf="col.type == 'usd'">
+                {{rowData[col.field] | currency}}
+              </div>
+              <div class="{{col.class}}" *ngIf="col.type == 'percent'">
+                {{rowData[col.field] | number }} %
+              </div>
+            </td>
+          </tr>
+      </ng-template>
+    </p-table>
+</div>

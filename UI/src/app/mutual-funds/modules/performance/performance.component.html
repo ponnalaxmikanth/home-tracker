@@ -1,7 +1,15 @@
 <div class="category-performance-view">
 
-  <p-table [columns]="cols" [value]="performance" sortField="month3CloseGrowth"
+  <p-table #perfdt [columns]="cols" [value]="performance" sortField="month3CloseGrowth"
       [sortOrder]="-1" dataKey="category" styleClass="p-datatable-sm p-datatable-gridlines" responsiveLayout="scroll" [scrollable]="true" scrollHeight="90vh">
+
+    <ng-template pTemplate="caption">
+      <div fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="1rem">
+          <button type="button" pButton pRipple icon="pi pi-file" (click)="perfdt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+      </div>
+    </ng-template>
+    
     <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" [class.category-header]="col.field == 'category'">
@@ -24,13 +32,14 @@
         </th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
       <tr [pSelectableRow]="rowData">
         <!-- <td *ngFor="let col of columns" [ngClass]="{'number': col.type === 'number' }">
           <div class="{{col.class}}" *ngIf="col.type == 'string' && col.field == 'classification'">{{rowData[col.field]}}</div>
           <div class="{{col.class}}" *ngIf="col.type == 'string' && col.field != 'classification'">{{rowData[col.field]}}</div>
           <div class="{{col.class}}" *ngIf="col.type == 'number'">{{rowData[col.field] | number: col.format}}</div>
         </td> -->
+        <td class=""><div class="row-number">{{(rowIndex + 1)}}</div></td>
         <td class=""><div class="classification">{{rowData.classification}}</div></td>
         <td class="category-cell">
           <div class="category">
