@@ -1,0 +1,14 @@
+.home-container {
+    margin: 10px;
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 5px;
+        .date-filter {
+            width: 13rem;
+            .p-calendar {
+              width: 100% !important;
+            }
+          }
+    }
+}

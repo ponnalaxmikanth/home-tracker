@@ -15,12 +15,16 @@ export class TransactionsComponent implements OnInit {
 
   @Input() groupTransactions: any;
   public grpTransactions: boolean = false;
+  public goals: any[] = [];
+  public categories: any[] = [];
+  public funds: any[] = [];
 
   constructor() {
     this.cols = [
       { field: 'transactionDate', header: 'Date', type: 'Date', class: 'date track-date', filter: false, display: true },
-      { field: 'portfolio', header: 'Portfolio', type: 'String', class: 'portfolio', filter: false, display: true },
+      // { field: 'portfolio', header: 'Portfolio', type: 'String', class: 'portfolio', filter: false, display: true },
       { field: 'goal', header: 'Goal', type: 'String', class: 'goal', filter: true, display: true },
+      { field: 'schemaCode', header: 'Code', class: 'schema-code', filter: false, display: true },
       { field: 'schemaName', header: 'Name', class: 'schema-name', filter: true, display: true },
       { field: 'category', header: 'Category', class: 'category', filter: true, display: true },
       { field: 'units', header: 'Units', class: 'number units', filter: false, display: true },
@@ -38,7 +42,31 @@ export class TransactionsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.fundTransactions) {
+      this.goals = [];
+      this.categories = [];
+      this.funds = [];
       this.transactions = changes.fundTransactions.currentValue;
+
+      this.transactions.forEach(
+        (transaction: any) => (transaction.transactionDate = new Date(transaction.transactionDate))
+      );
+
+      const uniqueGoals = [...new Set(this.transactions.map((item: any) => item.goal))];
+        uniqueGoals.forEach(element => {
+          this.goals.push({label: element, value: element});
+      });
+
+      const uniqueCategories = [...new Set(this.transactions.map((item: any) => item.category))];
+        uniqueCategories.forEach(element => {
+          this.categories.push({label: element, value: element});
+      });
+
+      const uniqueFunds = [...new Set(this.transactions.map((item: any) => item.schemaName))];
+
+      uniqueFunds.forEach(element => {
+          this.funds.push({label: element, value: element});
+      });
+
     }
 
     if (changes && changes.groupTransactions) {

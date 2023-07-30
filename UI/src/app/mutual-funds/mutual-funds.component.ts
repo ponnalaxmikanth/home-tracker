@@ -107,6 +107,7 @@ export class MutualFundsComponent implements OnInit {
   public dailyHistory: any;
   public monthlyGoalViewData: any;
   public portfolioId: number = -1;
+  public yearOldInvestReview: any;
   // public showDateFilter: boolean = false;
 
   @ViewChild('monthlyViewChart') private monthlyViewCanvas!: ElementRef;
@@ -120,7 +121,9 @@ export class MutualFundsComponent implements OnInit {
   public categoryViewDChart: any;
   // public cICategoryChartData: any;
   // public multiAxisOptions: any;
-
+  public chartView: any = {
+    monthlyView: false,
+  };
 
   constructor(public datepipe: DatePipe, private messageService: MessageService,
       private _investmentsService: InvestmentService, private _fundsServiceService: MutualFundsService,
@@ -255,13 +258,13 @@ export class MutualFundsComponent implements OnInit {
           // this.goals = this.portfolioInfo ? this.portfolioInfo.goals : null;
           this.consolidatedResponse = this.portfolioInfo && this.portfolioInfo?.consolidated ? this.portfolioInfo.consolidated : null;
 
-          this.updateMonthlyView(this.portfolioInfo && this.portfolioInfo?.categoryValuation ? this.portfolioInfo.monthlyTracker : null);
+          this.updateMonthlyView(this.portfolioInfo && this.portfolioInfo?.monthlyTracker ? this.portfolioInfo.monthlyTracker : null);
           this.updateCategoryCharts(this.portfolioInfo && this.portfolioInfo?.categoryValuation ? this.portfolioInfo.categoryValuation : null);
           this.updateFYYearCharts(this.portfolioInfo && this.portfolioInfo?.financialYearValuation ? this.portfolioInfo.financialYearValuation : null);
           this.transactions = this.portfolioInfo && this.portfolioInfo?.transactions ? this.portfolioInfo.transactions : null;
           this.dailyHistory = this.portfolioInfo && this.portfolioInfo?.fundsDailyTrack ? this.portfolioInfo.fundsDailyTrack : null;
           this.monthlyGoalViewData = this.portfolioInfo?.monthlyGoalView;
-
+          this.yearOldInvestReview = this.portfolioInfo?.yearOldInvestReview;
           setTimeout(() => {
             this.SpinnerService.hide();
           }, 0);
@@ -286,12 +289,15 @@ export class MutualFundsComponent implements OnInit {
     if (this.categoryViewDChart) this.categoryViewDChart.destroy();
   }
 
+  // this.updateMonthlyView(this.portfolioInfo && this.portfolioInfo?.monthlyTracker ? this.portfolioInfo.monthlyTracker : null);
+
   public updateMonthlyView(data: any): void {
     var labels: any[] = [];
     var investment: any[] = [];
     var profit: any[] = [];
     var currentValue: any[] = [];
     var profitPer: any[] = [];
+    var xirr: any[] = [];
 
     for (let i = 0; i < data.length; i++) {
 
@@ -300,6 +306,7 @@ export class MutualFundsComponent implements OnInit {
       currentValue.push(data[i].currentValue);
       profit.push(data[i].profit);
       profitPer.push(data[i].profitPer);
+      xirr.push(data[i].xirr);
     }
 
     this.monthlyViewDChart = new Chart(this.monthlyViewCanvas.nativeElement, {
@@ -317,6 +324,8 @@ export class MutualFundsComponent implements OnInit {
               backgroundColor: this.chartColors.investment.profit.background, borderColor: this.chartColors.investment.profit.border },
           { type: 'line', yAxisID: 'y1', fill: false, label: 'Profit (%)', data: profitPer, borderWidth: 3, cubicInterpolationMode: 'monotone', tension: 0.4,
               backgroundColor: this.chartColors.investment.profitper.background, borderColor: this.chartColors.investment.profitper.border },
+              { type: 'line', yAxisID: 'y1', fill: false, label: 'XIRR (%)', data: xirr, borderWidth: 3, cubicInterpolationMode: 'monotone', tension: 0.4,
+                  backgroundColor: this.chartColors.investment.xirr.background, borderColor: this.chartColors.investment.xirr.border },
           ]
       },
       options: this.chartOptions

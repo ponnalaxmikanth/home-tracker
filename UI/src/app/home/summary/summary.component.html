@@ -1,0 +1,32 @@
+<div class="summary-view-container" fxLayout="row" fxLayoutAlign="space-evenly">
+    <div class="total-budget" fxLayout="column" fxLayoutAlign="center center">
+        <span class="label">Budget</span>
+        <div class="value">
+            <span class="value">{{_budget ?? 0  | currency}}</span>
+            <span class="budget-used-percent"> ({{(_debit) / _budget * 100 | number}}%)</span>
+        </div>
+        
+      </div>
+    
+    <div class="vertical-divider">&nbsp;&nbsp;</div>
+    <div class="total-credit" fxLayout="column" fxLayoutAlign="center center">
+      <span class="label">Income</span>
+      <span class="value">{{_credit ?? 0 | currency}}</span>
+    </div>
+    <div class="vertical-divider"></div>
+    <div class="total-debit" fxLayout="column" fxLayoutAlign="center center">
+        <span class="label">Total Debit</span>
+        <span class="value">{{_debit ?? 0 | currency}}</span>
+    </div>
+    <div class="vertical-divider"></div>
+    <div class="total-debit" fxLayout="column" fxLayoutAlign="center center">
+      <span class="label">Saving</span>
+      <div class="value">
+        <span class="value">{{(_credit ?? 0) - (_debit ?? 0) | currency}}</span>
+        <span class="saving-percent">&nbsp;({{((_credit ?? 0) - (_debit ?? 0)) / _credit * 100 | number}}%)</span>
+      </div>
+      
+    </div>
+
+  </div>
+  

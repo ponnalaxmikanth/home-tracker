@@ -39,7 +39,7 @@ export class QuarterlyReviewComponent implements OnInit {
   public cols: any[] = [];
   public apiInPrigress: boolean = false;
   public portfolioId: number = -1;
-  // public qtrlyReview = 'qtrlyReview';
+  public goals: any[] = [];
 
   constructor(private _fundsServiceService: MutualFundsService, private messageService: MessageService, private SpinnerService: NgxSpinnerService, private route: ActivatedRoute) {
     this.cols = [
@@ -48,8 +48,6 @@ export class QuarterlyReviewComponent implements OnInit {
       { field: 'currentExpense', header: 'Current Expense', type: "currency", class: 'number current-expense', filter: false },
       { field: 'targetExpense', header: 'Target Expense', type: "currency", class: 'number target-expense', filter: false },
 
-      // { field: 'currentExpense', header: 'Current Expense', type: "currency", class: 'number current-expense' },
-      // { field: 'targetExpense', header: 'Target', type: "currency", class: 'number target-expense' },
       { field: 'startDate', header: 'Start Date', type: "date", class: 'date start-date', filter: false },
       { field: 'endDate', header: 'End Date', type: "date", class: 'date end-date', filter: false },
       { field: 'date', header: 'Review Date', type: "date", class: 'date period-date', filter: true },
@@ -72,31 +70,32 @@ export class QuarterlyReviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getData();
     this.route.queryParams.subscribe(params => {
         this.portfolioId = params.portfolioid;
+        this.getData();
       }
     );
   }
 
   public getData(): void {
-    // this.SpinnerService.show(this.qtrlyReview);
     this.apiInPrigress = true;
     this.quarterlyReviewInfo = [];
-    this._fundsServiceService.getGoalsReview(this.portfolioId).subscribe(
+    this.goals = [];
+    this._fundsServiceService.getGoalsReview(this.portfolioId, false).subscribe(
       (data: any) => {
         if (data.success) {
           this.quarterlyReviewInfo = data.success ? data.responseObject : [];
-          // this.SpinnerService.hide(this.qtrlyReview);
           this.apiInPrigress = false;
+          const uniqueGoals = [...new Set(this.quarterlyReviewInfo.map(item => item.goal))];
+          uniqueGoals.forEach(element => {
+            this.goals.push({label: element, value: element});
+          });
         } else {
-          // this.SpinnerService.hide(this.qtrlyReview);
           this.messageService.add({severity:'error', summary:'Error', detail:'Failed to Get Quaterly Review Info'});
           this.apiInPrigress = false;
         }
       },
       (err: any) => {
-        // this.SpinnerService.hide(this.qtrlyReview);
         this.apiInPrigress = false;
       });
 

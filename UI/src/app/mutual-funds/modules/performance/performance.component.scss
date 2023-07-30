@@ -1,3 +1,4 @@
+
 .category-performance-view {
   margin: 0 1rem;
   .p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
@@ -14,11 +15,19 @@
     // .category-cell {
     //   min-width: 30rem;
     // }
-    .category {
+    .category, .classification, .row-number {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
       min-width: 30rem;
+    }
+
+    .category {
+      min-width: 10rem;
+    }
+
+    .row-number {
+      min-width: 5rem;
     }
   }
 }

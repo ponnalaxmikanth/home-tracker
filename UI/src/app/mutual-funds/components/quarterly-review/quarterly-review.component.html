@@ -10,7 +10,7 @@
 
   <div class="grid-container" *ngIf="quarterlyReviewInfo.length > 0">
 
-    <p-table #dtq [columns]="cols" [value]="quarterlyReviewInfo" styleClass="p-datatable-sm p-datatable-gridlines" [scrollable]="true" scrollHeight="400px">
+    <p-table #dtq [columns]="cols" [value]="quarterlyReviewInfo" styleClass="p-datatable-sm p-datatable-gridlines" [scrollable]="true" sortField="date" [sortOrder]="-1" scrollHeight="400px">
 
     <ng-template pTemplate="caption">
       <div fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="1rem">
@@ -22,18 +22,26 @@
       <tr>
         <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" class="{{col.class}}">
           {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
-          <p-columnFilter *ngIf="col.filter" type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+          <div class="filter-container" *ngIf="col.field == 'goal'">
+            <p-columnFilter field="goal" matchMode="equals" display="menu">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-dropdown [ngModel]="value" [options]="goals" (onChange)="filter($event.value)" placeholder="Any">
+                      <ng-template let-option pTemplate="item">
+                          <span>{{option.label}}</span>
+                      </ng-template>
+                  </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+          <div class="filter-container" *ngIf="col.field !== 'goal'">
+            <p-columnFilter *ngIf="col.filter" type="{{col.type}}" field="{{col.field}}" display="menu"></p-columnFilter>
+          </div>
+          
         </th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <!-- <tr [pSelectableRow]="rowData" class="each-record">
-        <td class="date portfolio">{{rowData.portfolio}}</td>
-        <td class="goal">{{rowData.goal}}</td>
-        <td class="current-expense">{{rowData.currentExpense}}</td>
-        <td class="target-expense">{{rowData.targetExpense}}</td>
-      </tr> -->
       <tr [pSelectableRow]="rowData" class="each-record">
         <td *ngFor="let col of columns">
           <div class="{{col.class}}" *ngIf="col.type == 'date'">

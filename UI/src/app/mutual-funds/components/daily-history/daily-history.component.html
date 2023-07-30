@@ -24,7 +24,10 @@
         <td class="profit-after-tax number percent">{{rowData.profitAfterTax | currency:'INR': 'symbol' :'1.0-0':'en-IN' }}</td>
         <td class="profit-after-tax-percent number percent">{{rowData.pftaftTaxPer | number: '1.0-2'}} %</td>
         <td class="xirr number percent" [class.red]="rowData['xirr'] <= 12" [class.yellow]="rowData['xirr'] > 12 && rowData['xirr'] <= 15"
-        [class.orange]="rowData['xirr'] > 15 && rowData['xirr'] <= 20" [class.green]="rowData['xirr'] > 20">{{rowData.xirr | number: '2.2-2'}} %</td>
+        [class.orange]="rowData['xirr'] > 15 && rowData['xirr'] <= 20" [class.green]="rowData['xirr'] > 20">
+          <div>{{rowData.xirr | number: '2.2-2'}} %</div>
+          
+        </td>
         <!-- <td *ngFor="let col of columns" [class.red]="col.field == 'xirr' && rowData['xirr'] <= 12"
               [class.yellow]="col.field == 'xirr' && rowData['xirr'] > 12 && rowData['xirr'] <= 15"
               [class.orange]="col.field == 'xirr' && rowData['xirr'] > 15 && rowData['xirr'] <= 20"

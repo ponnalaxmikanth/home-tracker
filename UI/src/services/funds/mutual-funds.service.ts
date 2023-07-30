@@ -27,11 +27,15 @@ export class MutualFundsService {
     return this.http.post(this.baseUrl + "/AddFundsTransaction", request);
   }
 
+  redeemFundTransaction(request: any) {
+    return this.http.post(this.baseUrl + "/RedeemFund", request);
+  }
+
   getPerformance() {
     return this.http.get(this.baseUrl + "/GetPerformance");
   }
 
-  getGoalsReview(portfolioID: number) {
+  getGoalsReview(portfolioID: number, reCalculate: boolean) {
     return this.http.get(this.baseUrl + "/GoalsReview?portfolioID=" + portfolioID);
   }
 

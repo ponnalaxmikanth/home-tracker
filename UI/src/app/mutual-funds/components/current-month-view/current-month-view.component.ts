@@ -13,7 +13,15 @@ export class CurrentMonthViewComponent implements OnInit {
   // @Input() currentMonth: any;
   public currentMonth: any;
   public chartView: boolean = true;
-  constructor(private messageService: MessageService, private _investmentsService: InvestmentService, private _fundsService: MutualFundsService, private route: ActivatedRoute) { }
+  public dateValue: Date;
+  public portfolioID: number = -1;
+  constructor(private messageService: MessageService, private _investmentsService: InvestmentService, private _fundsService: MutualFundsService, private route: ActivatedRoute) {
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var firstDay = new Date(y, m, 1);
+    var lastDay = new Date(y, m + 1, 0);
+    this.dateValue = firstDay;
+    // this.dateValue.push(lastDay);
+  }
 
   ngOnInit(): void {
 
@@ -25,12 +33,14 @@ export class CurrentMonthViewComponent implements OnInit {
     //   });
 
     this.route.queryParams.subscribe(params => {
+      this.portfolioID = params.portfolioid;
       this.getCurrentMonthTracker(params.portfolioid);
     });
   }
 
   public getCurrentMonthTracker(portfolioid: number) : void {
-    this._investmentsService.getCurrentMonthTracker(portfolioid).subscribe(
+    this.currentMonth = null;
+    this._investmentsService.getCurrentMonthTracker(portfolioid, this.dateValue).subscribe(
       (data: any) => {
         if (data.success) {
           this.currentMonth = data.success ? data.responseObject : null;
@@ -46,6 +56,10 @@ export class CurrentMonthViewComponent implements OnInit {
 
   public handleViewChangeChange(event: any) : void {
 
+  }
+
+  public dateChanged(): void {
+    this.getCurrentMonthTracker(this.portfolioID);
   }
 
 }

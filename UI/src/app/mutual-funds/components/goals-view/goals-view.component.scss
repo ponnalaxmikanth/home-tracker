@@ -5,6 +5,22 @@
       border: 1px solid gray;
       padding: 0.5rem;
     }
+    .yr-old-review {
+      &.red {
+        background-color: red;
+        color: white;
+      }
+      &.yellow {
+        background-color: yellow;
+      }
+      &.orange {
+        background-color: orange;
+      }
+      &.green {
+        background-color: green;
+        color: white;
+      }
+    }
   }
   .horizontal-line {
     border: 1px solid orange;

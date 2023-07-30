@@ -1,4 +1,10 @@
 .current-month-view-container {
+  .date-filter {
+    width: 10rem;
+    .p-calendar {
+      width: 100% !important;
+    }
+  }
   .each-goal {
     border: 1px solid gray;
     margin: 0.25rem;

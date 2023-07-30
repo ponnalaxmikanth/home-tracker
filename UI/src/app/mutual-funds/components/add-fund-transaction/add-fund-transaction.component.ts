@@ -50,7 +50,8 @@ export class AddFundTransactionComponent implements OnInit {
       category: new FormControl('-'),
       folioNumber: new FormControl('-'),
       panCard: new FormControl('-'),
-      portfolioRegisterID: new FormControl(-1)
+      portfolioRegisterID: new FormControl(-1),
+      fundOption: new FormControl('Purchase')
     });
 
     this.panCards = [ {pan: 'ATDPP6918L'}, {pan: 'AVTPV3207G' }, { pan: 'GSDPP6542P'} ];
@@ -238,27 +239,53 @@ export class AddFundTransactionComponent implements OnInit {
       amount: transaction.amount,
       charges: transaction.stampDuty,
       pANCard: portfolio[0].investorPAN,
-      fundOption: "Purchase"
+      fundOption: transaction.transactionType
     };
 
+    console.log(request, transaction);
 
-    this._fundsServiceService.addFundTransaction(request)
-    .subscribe(
-      (response: any) => {
-        this.saveApiInProgress = false;
-        if (response?.success)
-          this.messageService.add({severity:'success', summary:'Success', detail:'Fund Transaciton Saved Successfully'});
-        else
-          this.messageService.add({severity:'error', summary:'Error', detail:'Failed to Save Fund Transaction'});
+    // redeemFundTransaction
 
-        this.SpinnerService.hide();
-      },
-      (err) => {
-        console.log('Add Fund Purchase response: ', err);
-        this.saveApiInProgress = false;
-        this.SpinnerService.hide();
-      }
-    );
+    if(request.fundOption == 'Redeem') {
+      this._fundsServiceService.redeemFundTransaction(request)
+      .subscribe(
+        (response: any) => {
+          this.saveApiInProgress = false;
+          if (response?.success)
+            this.messageService.add({severity:'success', summary:'Success', detail:'Fund Transaciton Saved Successfully'});
+          else
+            this.messageService.add({severity:'error', summary:'Error', detail:'Failed to Save Fund Transaction'});
+
+          this.SpinnerService.hide();
+        },
+        (err) => {
+          console.log('redeem Fund Purchase response: ', err);
+          this.saveApiInProgress = false;
+          this.SpinnerService.hide();
+        }
+      );
+    } else {
+      this._fundsServiceService.addFundTransaction(request)
+      .subscribe(
+        (response: any) => {
+          this.saveApiInProgress = false;
+          if (response?.success)
+            this.messageService.add({severity:'success', summary:'Success', detail:'Fund Transaciton Saved Successfully'});
+          else
+            this.messageService.add({severity:'error', summary:'Error', detail:'Failed to Save Fund Transaction'});
+
+          this.SpinnerService.hide();
+        },
+        (err) => {
+          console.log('Add Fund Purchase response: ', err);
+          this.saveApiInProgress = false;
+          this.SpinnerService.hide();
+        }
+      );
+    }
+
+
+    
 
   }
 
@@ -279,7 +306,8 @@ export class AddFundTransactionComponent implements OnInit {
       nav: transaction.price,
       units: transaction.units,
       charges: transaction.stampDuty,
-      amount: transaction.amount
+      amount: transaction.amount,
+      fundOption: transaction.transactionType
     });
 
     // console.log(`patch value: ${JSON.stringify({

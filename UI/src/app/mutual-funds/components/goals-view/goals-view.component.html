@@ -3,20 +3,20 @@
     <p-fieldset legend="Overall" [toggleable]="true">
       <div class="goals-consolidated-container" fxLayout="row" fxLayoutAlign="stretch space-evenly" fxLayoutGap="1rem">
 
-        <div class="consolidated monthly-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="25">
+        <div class="consolidated monthly-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="20">
           <div class="">Monthly Investment</div>
           <div class="">
             <span class="">
-              {{ goalConsolidated?.currentMonthInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
+              {{ goalConsolidated?.currentMonthInvestment ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
             </span>
             <span class="">
-              {{goalConsolidated?.sipAmount | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+              {{goalConsolidated?.sipAmount ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
             </span>
             <span class="current-profit-percent">&nbsp;&nbsp;({{goalConsolidated?.currentMonthSIPPercent | number: '1.2-2'}}%)</span>
           </div>
         </div>
 
-        <div class="consolidated investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="25">
+        <div class="consolidated investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="20">
           <div class="">Current Investment</div>
           <div class="">
             <span class="">
@@ -29,30 +29,43 @@
           </div>
         </div>
 
-        <div class="consolidated total-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="25">
+        <div class="consolidated total-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="20">
           <div class="">Target Investment</div>
           <div class="">
             <span class="">
-              {{ goalConsolidated?.currentInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
+              {{ goalConsolidated?.currentInvestment ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
             </span>
             <span class="">
-              {{goalConsolidated?.expectedInvestment | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+              {{goalConsolidated?.expectedInvestment ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
             </span>
             <span class="current-profit-percent">&nbsp;&nbsp;({{goalConsolidated?.targetInvested | number: '1.2-2'}}%)</span>
           </div>
 
         </div>
 
-        <div class="consolidated target-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="25">
+        <div class="consolidated target-investment" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="20">
           <div>Target with Inflation</div>
           <div>
             <span class="">
-              {{ goalConsolidated?.currentValue | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
+              {{ goalConsolidated?.currentValue ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
             </span>
             <span class="">
-              {{goalConsolidated?.futureValue | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+              {{goalConsolidated?.futureValue ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
             </span>
             <span class="current-profit-percent">&nbsp;&nbsp;({{goalConsolidated?.targetAchieved | number: '1.2-2'}}%)</span>
+          </div>
+        </div>
+
+        <div class="consolidated yr-old-review" fxLayout="column" fxLayoutAlign="space-between center" fxFlex="20" [class.red]="yrOldReview?.xirr <= 12" [class.yellow]="yrOldReview?.xirr > 12 && yrOldReview?.xirr <= 15" [class.orange]="yrOldReview?.xirr > 15 && yrOldReview?.xirr <= 20" [class.green]="yrOldReview?.xirr > 20">
+          <div>Year Old Review</div>
+          <div>
+            <span class="">
+              {{ yrOldReview?.investment ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN'}} /
+            </span>
+            <span class="">
+              {{yrOldReview?.profit ?? 0 | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+            </span>
+            <span class="year-old-xirr">&nbsp;&nbsp;({{yrOldReview?.xirr | number: '1.2-2'}}%)</span>
           </div>
         </div>
 
@@ -141,7 +154,10 @@
         </div>
 
         <div class="" fxLayout="row" fxLayoutAlign="space-between center">
-          <span class="remaining">Current Profit: {{(goal?.currentProfit)| currency:'INR':  'symbol' :'1.0-0':'en-IN'}}</span>
+          <span class="remaining">
+            Current Profit: {{(goal?.currentProfit)| currency:'INR':  'symbol' :'1.0-0':'en-IN'}}
+            ({{goal?.currentProfit / goal?.investment * 100  | number: '1.2-2'}}%)
+          </span>
           <span class="remaining-investment">
             Target Profit:
             {{ goal?.expectedProfit | currency:'INR':  'symbol' :'1.0-0':'en-IN'}}

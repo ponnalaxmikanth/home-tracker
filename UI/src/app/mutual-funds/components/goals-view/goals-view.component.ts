@@ -11,6 +11,7 @@ import { InvestmentService } from 'src/services/investment/investment.service';
 })
 export class GoalsViewComponent implements OnInit {
   @Input() dateFilter: any;
+  @Input() yearOldReview: any;
 
   public goalConsolidated: any;
   public goals: any[] = [];
@@ -19,6 +20,7 @@ export class GoalsViewComponent implements OnInit {
 
   public investment: number = 0;
   public targetInvestment: number = 0;
+  public yrOldReview: any;
 
   constructor(private messageService: MessageService, private _investmentsService: InvestmentService, private _fundsService: MutualFundsService, private route: ActivatedRoute, private router: Router) {
 
@@ -62,6 +64,9 @@ export class GoalsViewComponent implements OnInit {
       if (this.portfolioID != null && this.dateRange != null && this.dateRange[0] != null && this.dateRange[1] != null) {
         this.getGoalsInfo(this.portfolioID);
       }
+    }
+    if (changes && changes.yearOldReview) {
+      this.yrOldReview = changes.yearOldReview.currentValue;
     }
   }
 

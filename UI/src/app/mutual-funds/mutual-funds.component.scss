@@ -42,6 +42,17 @@
 
   .chart-container {
     border: 1px solid gray;
+    .header-section {
+      display: flex;
+      .left-section {
+        width: 97%;
+      }
+      .right-section {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    }
     .title {
       display: flex;
       justify-content: center;

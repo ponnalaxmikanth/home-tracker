@@ -1,0 +1,12 @@
+.transactions-container {
+    p-table {
+        .p-datatable-tbody {
+            .each-record {
+                td.number {
+                    display: flex;
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+}
